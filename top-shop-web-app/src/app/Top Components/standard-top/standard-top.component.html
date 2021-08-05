@@ -1,0 +1,93 @@
+<div class="container">
+  <div id="top">
+    <img src="../../assets/images/Top Shapes/Standard con backsplash.png">
+  </div>
+  <div id="overlayForm">
+    <form #topForm="ngForm" (ngSubmit)="onSubmit()">
+      <div id="row1">
+        <div style="flex-grow:2;"></div>
+        <input [(ngModel)]="model.width" style="width:70px;" id="width" type="text" name="Width" placeholder="Width">
+        <div style="flex-grow:3;"></div>
+      </div>
+      <div id="row2" style="height:25px;">
+        <div>
+          <p></p>
+        </div>
+      </div>
+
+      <div id="row3">
+        <select [(ngModel)]="model.lCap" style="align-self:baseline; 
+                    width:80px; margin-left:5px;" id="leftCap" name="leftCap" type="text">
+          <option *ngFor="let lc of capOptions" [value]="lc">{{lc}}</option>
+        </select>
+        <div style="flex-grow:1;">
+          <p></p>
+        </div>
+        <select [(ngModel)]="model.rCap" style="align-self:baseline; width:80px; margin-right:10px;" id="rightCap"
+          name="rightCap" type="text">
+          <option *ngFor="let lc of capOptions" [value]="lc">{{lc}}</option>
+        </select>
+        <div style="width:80px">
+          <p></p>
+        </div>
+
+      </div>
+
+      <div id="row4">
+        <div>
+          <p></p><br>
+        </div>
+      </div>
+
+      <div id="row5">
+        <div style="flex-grow:1;"></div>
+
+        <input [(ngModel)]="model.depth" style="align-self:flex-end; width:70px; margin-right:5px;" id="Depth"
+          name="Depth" type="text" placeholder="Depth">
+
+      </div>
+      <div id="row6">
+        <div>
+          <p></p><br><br><br>
+        </div>
+      </div>
+      <div id="row7">
+        <div style="flex-grow:1;">
+          <p></p>
+        </div>
+
+        <select [(ngModel)]="model.sinkType" (change)="sinkChange()" style=" width:140px; margin: 0 3px;" id="SinkType"
+          name="SinkType" type="text" placeholder="Sink Type">
+          <option *ngFor="let sink of sinkType" [value]="sink">{{sink}}</option>
+        </select>
+
+        <input *ngIf=sinkShow [(ngModel)]="model.sinkMeas" style=" width:70px; margin: 0 3px;" id="SinkMeas"
+          name="SinkMeas" type="text">
+
+        <select *ngIf=sinkShow [(ngModel)]="model.sinkSide" style=" width:100px; margin: 0 3px;" id="SinkSide"
+          name="SinkSide" type="text">
+          <option *ngFor="let sinkS of sinkSide" [value]="sinkS">{{sinkS}}</option>
+        </select>
+
+
+
+        <div style="flex-grow:4;">
+          <p></p>
+        </div>
+      </div>
+      <div id="row8">
+        <div style="flex-grow:1;">
+          <p></p>
+        </div>
+
+        <div style="flex-grow:4;">
+          <p></p>
+        </div>
+      </div>
+
+    </form>
+
+
+    {{ model | json}}
+  </div>
+</div>

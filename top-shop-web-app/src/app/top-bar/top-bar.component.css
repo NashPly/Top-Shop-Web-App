@@ -1,0 +1,8 @@
+div {
+background-color: #5280ff;
+color: white;
+height:7vh;
+display:flex;
+align-items: center;
+justify-content: center;
+}

@@ -1,0 +1,22 @@
+<div class="container">
+    <form #shoppingCart="ngForm" (ngSubmit)="onSubmit(topOrder)">
+        <div *ngFor="let top of topOrder">
+            <div class="topContainer">
+                <div class="topImgContainer" style="width: 66%; ">
+                    <h3>{{top.type}}</h3>
+                    <img style="object-fit: fill; HEIGHT:70%" src="../../assets/images/Top Shapes/{{top.file}}.png">
+                </div>
+                <div style="flex-grow:1; display:flex; flex-direction: row; align-items: center;">
+                    <p>Qty: &nbsp;</p> <select [(ngModel)]="top.quantity" name="quantity" type="text">
+                        <option *ngFor="let num of [0,1,2,3,4,5,6,7,8,9,10]">{{num}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex; justify-content: center;">
+            <button id="button1" type="submit">Submit</button>
+        </div>
+    </form>
+
+
+</div>
