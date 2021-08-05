@@ -13,6 +13,7 @@
     flex-direction:row;
     justify-content: center;
     align-items: center;
+    object-fit: contain; 
 }
 
 .topImgContainer{
@@ -22,16 +23,25 @@
     align-items:center;
     flex-direction: column;
     float:left;
+    object-fit: contain; 
+}
+
+img{
+    object-fit: contain; 
+    width:inherit;
+    height: 70%;
+    
 }
 
 select{
     width:150px;
     height:40px;
     border-radius:4px;
+    font-size:1.1em;
 }
 
 select:hover{
-    background-color: rgb(224, 224, 224);
+    background-color: rgb(238, 238, 238);
     
     transition: all 0.2s;
 }
@@ -47,14 +57,16 @@ select:hover{
     box-sizing: border-box;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
-    font-weight:300;
+    font-size:1.2em;
     color:#ffffff;
     text-align:center;
     transition: all 0.2s;
-    margin-top: 10px; padding: 10px;
-    width:100px;
-
+    margin-top: 10px; 
+    padding: 10px;
+    margin-bottom:10px;
+    width:300px;
     }
+
 #button1:hover{
     color:#002a9c;
     background-color:#d6e0fd;

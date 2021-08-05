@@ -8,6 +8,7 @@ import { StandardTopComponent } from './Top Components/standard-top/standard-top
 import { FormsModule } from '@angular/forms';
 import { TopInputComponent } from './top-input/top-input.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     TopBarComponent,
     StandardTopComponent,
     TopInputComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
