@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderSelection } from 'src/Classes/order';
 
 @Component({
@@ -16,7 +17,7 @@ export class ShoppingCartComponent implements OnInit {
     { "type": "U Shaped", "file": "U_Shaped_Legs", "quantity":"0" }
   ]
 
-  constructor() { 
+  constructor(private router: Router) { 
 
   }
 
@@ -26,8 +27,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onSubmit(tO:OrderSelection[] ){
-    alert("Success " + tO.length);
-    
+    this.router.navigate(['app-measurement-entry']);
   }
   //this.name = ["Standard", "Standard", "Right L Corner", "Left L Corner", "U Shaped"]
   //this.file = ["Standard", "Standard", "Point_Right_L_Corner", "Point_Left_L_Corner", "U_Shaped_Legs"]

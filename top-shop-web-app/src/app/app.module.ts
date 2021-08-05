@@ -9,6 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { TopInputComponent } from './top-input/top-input.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { FooterComponent } from './footer/footer.component';
+import { MeasurementEntryComponent } from './measurement-entry/measurement-entry.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'app-root', component: AppComponent},
+  { path: 'app-measurement-entry', component: MeasurementEntryComponent}
+];
 
 @NgModule({
   declarations: [
@@ -17,13 +24,16 @@ import { FooterComponent } from './footer/footer.component';
     StandardTopComponent,
     TopInputComponent,
     ShoppingCartComponent,
-    FooterComponent
+    FooterComponent,
+    MeasurementEntryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(routes)
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })
