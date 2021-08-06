@@ -1,3 +1,7 @@
-<app-top-bar></app-top-bar>
-<app-shopping-cart></app-shopping-cart>
-<app-footer></app-footer>
+<div id="page-container">
+    <app-top-bar></app-top-bar>
+    <div id = "content-wrapper">
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer id = "footer"></app-footer>
+</div>

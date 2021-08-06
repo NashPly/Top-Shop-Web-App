@@ -1,7 +1,8 @@
-<br><div class="container">
-    <form #shoppingCart="ngForm" (ngSubmit)="onSubmit(topOrder)">
-        <div *ngFor="let top of topOrder">
-            <div class="topContainer">
+<div class="container">
+    <!-- <form #shoppingCart="ngForm" (ngSubmit)="onSubmit()"> -->
+        <form #shoppingCart="ngForm" (ngSubmit)="onSubmit()">
+        <div *ngFor="let top of topOrder; let i = index;">
+            <div class="topContainer" [ngClass]="{'bottomTopContainer' :i == topOrder.length-1}">
                 <div class="topImgContainer" style="width: 66%; ">
                     <h3>{{top.type}}</h3>
                     <img  src="../../assets/images/Top Shapes/{{top.file}}.png">
@@ -14,9 +15,7 @@
             </div>
         </div>
         <div style="display:flex; justify-content: center;">
-            <button id="button1" type="submit">Submit</button>
+            <button name="submit"  id="button1" type="submit">Submit</button>
         </div>
     </form>
-
-
 </div>

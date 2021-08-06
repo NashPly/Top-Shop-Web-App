@@ -2,15 +2,18 @@
 			border: solid black 1px;
 		}
 
-		.container{
-			position: relative;
+		.standard_container{
 			display:flex;
-			width: 480px;
+			width:600px;
 		}
 
-		#top{
+		#topImg{
 			position:absolute;
 			z-index:-1;
+			width:inherit;
+			display:flex;
+			justify-content: center;
+
 		}
 
 		#overlayForm{

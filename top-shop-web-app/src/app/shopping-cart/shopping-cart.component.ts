@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap} from '@angular/router';
 import { OrderSelection } from 'src/Classes/order';
 
 @Component({
@@ -11,24 +11,20 @@ export class ShoppingCartComponent implements OnInit {
   
   topOrder: OrderSelection[] = [
     { type: "Standard Kitchen", file: "Standard", quantity:"0" },
-    { "type": "Standard Vanity", "file": "Standard", "quantity":"0" },
-    { "type": "Right L Corner", "file": "Point_Right_L_Corner", "quantity":"0" },
-    { "type": "Left L Corner", "file": "Point_Left_L_Corner", "quantity":"0"},
-    { "type": "U Shaped", "file": "U_Shaped_Legs", "quantity":"0" }
+    { "type": "Standard Vanity", "file": "Standard", quantity:"0" },
+    { "type": "Right L Corner", "file": "Point_Right_L_Corner", quantity:"0" },
+    { "type": "Left L Corner", "file": "Point_Left_L_Corner", quantity:"0"},
+    { "type": "U Shaped", "file": "U_Shaped_Legs", quantity:"0" }
   ]
 
-  constructor(private router: Router) { 
-
-  }
-
+  constructor(private router: Router) {}
   
-
-  ngOnInit(): void {
+  ngOnInit() {}
+  
+  onSubmit(){
+    this.router.navigateByUrl('app-measurement-entry', {state: this.topOrder});
   }
-
-  onSubmit(tO:OrderSelection[] ){
-    this.router.navigate(['app-measurement-entry']);
-  }
+  
   //this.name = ["Standard", "Standard", "Right L Corner", "Left L Corner", "U Shaped"]
   //this.file = ["Standard", "Standard", "Point_Right_L_Corner", "Point_Left_L_Corner", "U_Shaped_Legs"]
 }

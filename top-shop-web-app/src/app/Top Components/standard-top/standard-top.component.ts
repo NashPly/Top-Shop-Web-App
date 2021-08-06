@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { StandardTop } from 'src/Classes/standardTop';
 
 @Component({
-  selector: 'app-standard-top',
+  selector: 'app-Standard-top',
   templateUrl: './standard-top.component.html',
   styleUrls: ['./standard-top.component.css']
 })
