@@ -9,10 +9,9 @@ import { StandardTop } from 'src/Classes/standardTop';
 export class StandardTopComponent implements OnInit {
 
   constructor() {
-    this.ngOnInit();
    }
 
-  model = new StandardTop();
+  model!: StandardTop;
   capOptions:string[]= ["RAW","CAP","SPL"];
   sinkType:string[] = ["NONE", "DOUBLE BOWL", "SINGLE BOWL", "ROUND", "17\"X 19\" ROUND","CUSTOM"];
   sinkSide:string[] = ["From the left", "From the right"];

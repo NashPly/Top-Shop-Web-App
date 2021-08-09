@@ -1,4 +1,5 @@
 <div class="container">
+{{topOrder | json}}
     <!-- <form #shoppingCart="ngForm" (ngSubmit)="onSubmit()"> -->
         <form #shoppingCart="ngForm" (ngSubmit)="onSubmit()">
         <div *ngFor="let top of topOrder; let i = index;">
@@ -8,8 +9,12 @@
                     <img  src="../../assets/images/Top Shapes/{{top.file}}.png">
                 </div>
                 <div style="flex-grow:1; display:flex; flex-direction: row; align-items: center;">
-                    <p>Qty: &nbsp;</p> <select [(ngModel)]="top.quantity" name="quantity" type="text">
-                        <option *ngFor="let num of [0,1,2,3,4,5,6,7,8,9,10]">{{num}}</option>
+                    <p>Qty: &nbsp;</p> <select [(ngModel)]="top.quantity" name="quantity" value="{{top.quantity}}" type="text">
+                        <option *ngFor="let num of [0,1,2,3,4,5,6,7,8,9,10]" value = "{{num}}">{{num}}</option>
+                        <!-- <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option> -->
                     </select>
                 </div>
             </div>

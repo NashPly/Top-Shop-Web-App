@@ -1,9 +1,9 @@
-<div class="standard_container">
+<div class="standard_container" >
   <div id="topImg">
     <img src="../../../assets/images/Top Shapes/Standard.png">
   </div>
-  <div id="overlayForm">
-    <form #topForm="ngForm" (ngSubmit)="onSubmit()">
+  <div id="overlayForm" >
+    <form #topForm="ngForm"  (ngSubmit)="onSubmit()">
       <div id="row1">
         <div style="flex-grow:2;"></div>
         <input [(ngModel)]="model.width" style="width:70px;" id="width" type="text" name="Width" placeholder="Width">
@@ -48,7 +48,7 @@
       </div>
       <div id="row6">
         <div>
-          <p></p><br><br><br>
+          <p></p><br><br><br><br><br><br><br>
         </div>
       </div>
       <div id="row7">
@@ -61,8 +61,8 @@
           <option *ngFor="let sink of sinkType" [value]="sink">{{sink}}</option>
         </select>
 
-        <input *ngIf=sinkShow [(ngModel)]="model.sinkMeas" style=" width:70px; margin: 0 3px;" id="SinkMeas"
-          name="SinkMeas" type="text">
+        <input *ngIf=sinkShow [(ngModel)]="model.sinkMeas" style=" width:120px; margin: 0 3px;" id="SinkMeas"
+          name="SinkMeas" type="text" placeholder="Sink Measurement">
 
         <select *ngIf=sinkShow [(ngModel)]="model.sinkSide" style=" width:100px; margin: 0 3px;" id="SinkSide"
           name="SinkSide" type="text">
@@ -71,10 +71,11 @@
 
 
 
-        <div style="flex-grow:4;">
+        <div style="flex-grow:3;">
           <p></p>
         </div>
       </div>
+
       <div id="row8">
         <div style="flex-grow:1;">
           <p></p>
