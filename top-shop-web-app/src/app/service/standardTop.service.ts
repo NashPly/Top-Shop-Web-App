@@ -13,15 +13,15 @@ export class StandardTopService {
     constructor(private http: HttpClient){}
 
     public getStandardTops(): Observable<StandardTop[]> {
-        return this.http.get<StandardTop[]>(`${this.apiServerUrl}`)
+        return this.http.get<StandardTop[]>(`${this.apiServerUrl}/StandardTops`)
     }
 
     public getStandardTop(sTop:StandardTop): Observable<StandardTop> {
-        return this.http.post<StandardTop>(`${this.apiServerUrl}/add/`, sTop)
+        return this.http.post<StandardTop>(`${this.apiServerUrl}/StandardTops/add/`, sTop)
     }
 
     public updateStandardTop(sTop:StandardTop): Observable<StandardTop> {
-        return this.http.put<StandardTop>(`${this.apiServerUrl}/update/`, sTop)
+        return this.http.put<StandardTop>(`${this.apiServerUrl}/StandardTops/update/`, sTop)
     }
 
     /*
