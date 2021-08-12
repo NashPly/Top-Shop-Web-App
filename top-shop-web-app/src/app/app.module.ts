@@ -13,6 +13,7 @@ import { MeasurementEntryComponent } from './measurement-entry/measurement-entry
 import { Routes, RouterModule } from '@angular/router';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { HttpClientModule } from '@angular/common/http';
+import { OrderInfoEntryComponent } from './order-info-entry/order-info-entry.component';
 
 const routes: Routes = [
   { path: 'app-root', component: AppComponent},
@@ -28,7 +29,8 @@ const routes: Routes = [
     ShoppingCartComponent,
     FooterComponent,
     MeasurementEntryComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    OrderInfoEntryComponent
   ],
   imports: [
     BrowserModule,

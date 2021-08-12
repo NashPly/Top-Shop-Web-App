@@ -1,0 +1,67 @@
+<div class="container">
+    {{order | json}}
+    <div class="content-container">
+        <div class="left-content">
+            <div>
+                <h2>Welcome to</h2>
+                <h2>Nashville Plywood Online</h2>
+                <h2>Counter Top Division</h2>
+            </div>
+        </div>
+        <div class="right-content">
+            <form (ngSubmit)="submitForm()">
+            
+                <div class="row">
+                    <h3>Please fill out the counter top order form <br>to get started</h3>
+                </div>
+                <div class="row">
+                    <label>Customer/Company Name: &nbsp;</label>
+                    <div style="flex-grow:1;"></div>
+                    <input class="field" type="text" [(ngModel)]="order.cust_name"  name="cust_name">
+                </div>
+                <div class="row">
+                    <label>Phone Number: </label>
+                    <div style="flex-grow:1;"></div>
+                    <input class="field" type="text" [(ngModel)]="order.phone_number" name="phone_number">
+                </div>
+                <div class="row">
+                    <label>Email Address: </label>
+                    <div style="flex-grow:1;"></div>
+                    <input class="field" type="text" [(ngModel)]="order.email_addr" name="email_addr">
+                </div>
+                <div class="row">
+                    <label>Job Name: </label>
+                    <div style="flex-grow:1;"></div>
+                    <input class="field" type="text" [(ngModel)]="order.job_name" name="job_name">
+                </div>
+
+                <h4>Counter Top Details</h4>
+                <div class="row">
+                    <label>Color: </label>
+                    <div style="flex-grow:1;"></div>
+                    <select class="field" type="text" [(ngModel)]="order.color" name="color">
+                        <option *ngFor="let color of colors" [value]="color.id">{{color.name}}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Profile: </label>
+                    <div style="flex-grow:1;"></div>
+                    <select class="field" type="text" [(ngModel)]="order.profile" name="profile">
+                        <option *ngFor="let profile of profiles" [value]="profile.id">{{profile.p_name}}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label>Finish: </label>
+                    <div style="flex-grow:1;"></div>
+                    <select class="field" type="text" [(ngModel)]="order.finish" name="finish">
+                        <option *ngFor="let finish of finishes" [value]="finish.id">{{finish.name}}</option>
+                    </select>
+                </div>
+
+                <div style="display:flex; justify-content: center;">
+                    <button name="submit" id="button1" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

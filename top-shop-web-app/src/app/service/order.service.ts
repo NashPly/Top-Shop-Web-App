@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Order} from "src/Classes/order";
+import { Orders } from "src/Classes/orders";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -9,19 +9,19 @@ import { environment } from "src/environments/environment";
 })
 export class OrderService {
     
-    private apiServerUrl = environment.apiBaseUrl;
+    private apiServerUrl = environment.apiBaseUrl + "/order";
 
     constructor(private http: HttpClient){}
 
-    public newOrderList(): Observable<Order> {
-        return this.http.get<Order>(`${this.apiServerUrl}/newOrder`)
+    public getBlankOrder(): Observable<Orders> {
+        return this.http.get<Orders>(`${this.apiServerUrl}/blankOrder`)
     }
 
-    public getOrderList(): Observable<Order> {
-        return this.http.get<Order>(`${this.apiServerUrl}/getOrder/1`)
+    public getOrder(): Observable<Orders> {
+        return this.http.get<Orders>(`${this.apiServerUrl}/getOrder/1`)
     }
 
-    public saveOrderList(order:Order): Observable<number> {
-        return this.http.put<number>(`${this.apiServerUrl}/save/`,order)
+    public saveOrder(order:Orders): Observable<void> {
+        return this.http.post<void>(`${this.apiServerUrl}/save/`,order)
       }
 }

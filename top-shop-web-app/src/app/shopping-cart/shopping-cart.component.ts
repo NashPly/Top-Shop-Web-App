@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { Order } from 'src/Classes/order';
+import { OrderList } from 'src/Classes/orderList';
 import { TopPhoto } from 'src/Classes/topPhoto';
-import { OrderService } from '../service/order.service';
+import { OrderListService} from '../service/orderList.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,12 +16,12 @@ export class ShoppingCartComponent implements OnInit {
   shoppingCartForm = new FormGroup({
     quant0: new FormControl()
   });
-  topOrder!: Order;
+  topOrder!: OrderList;
   topPhoto: TopPhoto[] = [];
   numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   holder: { [key: number]: any } = [];
 
-  constructor(private router: Router, private orderService: OrderService, private fb: FormBuilder) {}
+  constructor(private router: Router, private orderListService: OrderListService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.getOrderList();
@@ -29,8 +29,8 @@ export class ShoppingCartComponent implements OnInit {
 
   public getOrderList(): void {
 
-    this.orderService.getOrderList().subscribe(
-      (response: Order) => {
+    this.orderListService.getOrderList().subscribe(
+      (response: OrderList) => {
         this.topOrder = response;
         this.holder = Object.keys(this.topOrder);
 
@@ -84,7 +84,7 @@ export class ShoppingCartComponent implements OnInit {
     this.topOrder.leftLCorner = this.topPhoto[3].quantity;
     this.topOrder.uShaped = this.topPhoto[4].quantity;
 
-    this.orderService.saveOrderList(this.topOrder).subscribe(
+    this.orderListService.saveOrderList(this.topOrder).subscribe(
       (response: number) => {
         //number returns the list ID
         this.router.navigate(['app-measurement-entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto}});
