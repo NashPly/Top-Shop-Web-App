@@ -22,6 +22,6 @@ export class OrderService {
     }
 
     public saveOrderList(order:Order): Observable<number> {
-        return this.http.post<number>(`${this.apiServerUrl}/saveOrder`,order)
+        return this.http.put<number>(`${this.apiServerUrl}/save/`,order)
       }
 }

@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: ShoppingCartComponent }, //Default
   {
     path: 'app-measurement-entry', component: MeasurementEntryComponent, children: [
-      {path: 'app-Standard-top', component: StandardTopComponent}
+      {path: "app-Standard-top", component: StandardTopComponent}
     ]},
   
     { path: "**", redirectTo : ''}

@@ -17,6 +17,9 @@ export class MeasurementEntryComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+
+    console.log(history.state.topFiles);
+    this.topPhoto = history.state.topFiles;
     // this.topPhoto = [
     //   { type: "Standard", file: "Standard" },
     //   { type: "Standard Vanity", file: "Standard" },

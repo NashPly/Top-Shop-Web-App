@@ -35,21 +35,32 @@ export class ShoppingCartComponent implements OnInit {
         this.holder = Object.keys(this.topOrder);
 
         this.topPhoto = [
-          { type: "Standard", file: "Standard", quantity: this.topOrder.id.toString() },
-          { type: "Standard Vanity", file: "Standard", quantity: this.topOrder.vanityTop.toString() },
-          { type: "Right L Corner", file: "Point_Right_L_Corner", quantity: this.topOrder.rightLCorner.toString() },
-          { type: "Left L Corner", file: "Point_Left_L_Corner", quantity: this.topOrder.leftLCorner.toString() },
-          { type: "U Shaped", file: "U_Shaped_Legs", quantity: this.topOrder.uShaped.toString() }
+          { type: "Standard", file: "Standard", quantity: this.topOrder.id},
+          { type: "Standard Vanity", file: "Standard", quantity: this.topOrder.vanityTop},
+          { type: "Right L Corner", file: "Point_Right_L_Corner", quantity: this.topOrder.rightLCorner},
+          { type: "Left L Corner", file: "Point_Left_L_Corner", quantity: this.topOrder.leftLCorner},
+          { type: "U Shaped", file: "U_Shaped_Legs", quantity: this.topOrder.uShaped }
         ];
         this.populateFieldInfo();
 
 
-        let orderList: { [key: string]: any } = this.topOrder
-    for (let i = 0; i < this.topPhoto.length; i++) {
-      orderList[`${this.holder[i]}`] = this.topPhoto[i].quantity;
-    }
+    //     let orderList: { [key: string]: any } = this.topOrder
+    // for (let i = 0; i < this.topPhoto.length; i++) {
+    //   orderList[`${this.holder[i]}`] = this.topPhoto[i].quantity;
+    // }
 
-
+    
+    
+    // this.topOrder.barTop = this.topPhoto[6].quantity;
+    // this.topOrder.id = orderList.id;
+    // this.topOrder.kitchenTop = orderList.kitchenTop;
+    // this.topOrder.vanityTop = orderList.vanityTop;
+    // this.topOrder.leftLCorner = orderList.leftLCorner;
+    // this.topOrder.rightLCorner = orderList.rightLCorner;
+    // this.topOrder.uShaped = orderList.uShaped;
+    // this.topOrder.barTop = orderList.barTop;
+    
+    console.log(this.topOrder);
 
       },
       (error: HttpErrorResponse) => {
@@ -67,21 +78,16 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onSubmit() {
-
-    // let orderList: { [key: string]: any } = this.topOrder
-    // for (let i = 0; i < this.topPhoto.length; i++) {
-    //   orderList[`${this.holder[i]}`] = this.topPhoto[i].quantity;
-    // }
-
-    // orderList.array.forEach((element: any) => {
-      
-    //   console.log(element);
-    // });
+    this.topOrder.kitchenTop = this.topPhoto[0].quantity;
+    this.topOrder.vanityTop = this.topPhoto[1].quantity;
+    this.topOrder.rightLCorner = this.topPhoto[2].quantity;
+    this.topOrder.leftLCorner = this.topPhoto[3].quantity;
+    this.topOrder.uShaped = this.topPhoto[4].quantity;
 
     this.orderService.saveOrderList(this.topOrder).subscribe(
       (response: number) => {
         //number returns the list ID
-        this.router.navigate(['app-measurement-entry']);
+        this.router.navigate(['app-measurement-entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto}});
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
