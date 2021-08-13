@@ -1,5 +1,6 @@
+{{order | json}}
 <div class="container">
-    {{order | json}}
+
     <div class="content-container">
         <div class="left-content">
             <div>
@@ -35,19 +36,20 @@
                     <input class="field" type="text" [(ngModel)]="order.job_name" name="job_name">
                 </div>
 
+                <!--TODO change option value based on ifSelected-->
                 <h4>Counter Top Details</h4>
                 <div class="row">
                     <label>Color: </label>
                     <div style="flex-grow:1;"></div>
                     <select class="field" type="text" [(ngModel)]="order.color" name="color">
-                        <option *ngFor="let color of colors" [value]="color.id">{{color.name}}</option>
+                        <option *ngFor="let col of colors" [value]="col.id">{{col.name}}</option>
                     </select>
                 </div>
                 <div class="row">
                     <label>Profile: </label>
                     <div style="flex-grow:1;"></div>
                     <select class="field" type="text" [(ngModel)]="order.profile" name="profile">
-                        <option *ngFor="let profile of profiles" [value]="profile.id">{{profile.p_name}}</option>
+                        <option *ngFor="let pro of profiles" [value]="pro.id">{{pro.name}}</option>
                     </select>
                 </div>
                 <div class="row">

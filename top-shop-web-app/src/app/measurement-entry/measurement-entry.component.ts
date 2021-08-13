@@ -10,6 +10,7 @@ import { TopPhoto } from 'src/Classes/topPhoto';
 })
 export class MeasurementEntryComponent implements OnInit {
 
+  pageUrl = history.state.backPage;
   topPhoto: TopPhoto[] = [];
   next: number = 1;
   previous: number = -1;
@@ -18,8 +19,9 @@ export class MeasurementEntryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(history.state.topFiles);
+    console.log(history.state.backPage);
     this.topPhoto = history.state.topFiles;
+    this.router.navigate(['standard_top'], {state:{backPage: this.pageUrl}, relativeTo: this.route });
     // this.topPhoto = [
     //   { type: "Standard", file: "Standard" },
     //   { type: "Standard Vanity", file: "Standard" },
@@ -27,7 +29,7 @@ export class MeasurementEntryComponent implements OnInit {
     //   { type: "Left L Corner", file: "Point_Left_L_Corner" },
     //   { type: "U Shaped", file: "U_Shaped_Legs" }
     // ];
-    this.initOpen();
+    //this.initOpen();
   }
 
   initOpen() {

@@ -13,6 +13,8 @@ import { OrderListService} from '../service/orderList.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
+  //Used for "back button" navigation
+  pageUrl = "shopping_cart";
   shoppingCartForm = new FormGroup({
     quant0: new FormControl()
   });
@@ -29,13 +31,13 @@ export class ShoppingCartComponent implements OnInit {
 
   public getOrderList(): void {
 
-    this.orderListService.getOrderList().subscribe(
+    this.orderListService.getBlankOrderList().subscribe(
       (response: OrderList) => {
         this.topOrder = response;
         this.holder = Object.keys(this.topOrder);
 
         this.topPhoto = [
-          { type: "Standard", file: "Standard", quantity: this.topOrder.id},
+          { type: "Standard", file: "Standard", quantity: this.topOrder.kitchenTop},
           { type: "Standard Vanity", file: "Standard", quantity: this.topOrder.vanityTop},
           { type: "Right L Corner", file: "Point_Right_L_Corner", quantity: this.topOrder.rightLCorner},
           { type: "Left L Corner", file: "Point_Left_L_Corner", quantity: this.topOrder.leftLCorner},
@@ -84,14 +86,17 @@ export class ShoppingCartComponent implements OnInit {
     this.topOrder.leftLCorner = this.topPhoto[3].quantity;
     this.topOrder.uShaped = this.topPhoto[4].quantity;
 
-    this.orderListService.saveOrderList(this.topOrder).subscribe(
-      (response: number) => {
-        //number returns the list ID
-        this.router.navigate(['app-measurement-entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto}});
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
+    this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto, backPage: this.pageUrl}});
+
+    //TODO Remove when ready
+    // this.orderListService.saveOrderList(this.topOrder).subscribe(
+    //   (response: number) => {
+    //     //number returns the list ID
+    //     this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto}});
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     alert(error.message);
+    //   }
+    // )
   }
 }

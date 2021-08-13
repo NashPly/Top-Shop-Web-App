@@ -14,6 +14,6 @@ export class BackButtonComponent implements OnInit {
   }
 
   onBack(){
-    this.router.navigate(['']);
+    this.router.navigate([`${history.state.backPage}`]);
   }
 }

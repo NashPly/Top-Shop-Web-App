@@ -8,14 +8,11 @@ import { StandardTopComponent } from './Top Components/standard-top/standard-top
 
 const routes: Routes = [
     {path: "", component: OrderInfoEntryComponent},
-    {path: "shopping_list", component: ShoppingCartComponent}
-  , //Default
-  {
-    path: 'measurement_entry', component: MeasurementEntryComponent, children: [
+    {path: "shopping_list", component: ShoppingCartComponent},
+    {path: "measurement_entry", component: MeasurementEntryComponent, children: [
       {path: "standard_top", component: StandardTopComponent}
-    ]},
-  
-    { path: "**", redirectTo : ''}
+    ]}
+    //,{ path: "**", redirectTo : ''}
 
 ];
 

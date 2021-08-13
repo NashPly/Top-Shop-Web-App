@@ -3,3 +3,24 @@ body{
     margin:0px;
     padding:0px;
 }
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    padding: -10px 0;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 20px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
