@@ -14,7 +14,7 @@ import { OrderListService} from '../service/orderList.service';
 export class ShoppingCartComponent implements OnInit {
 
   //Used for "back button" navigation
-  pageUrl = "shopping_cart";
+  pageUrl = "shopping_list";
   shoppingCartForm = new FormGroup({
     quant0: new FormControl()
   });
