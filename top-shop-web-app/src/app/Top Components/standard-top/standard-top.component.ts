@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ifStmt } from '@angular/compiler/src/output/output_ast';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonService } from 'src/app/service/common.service';
 import { SinkService } from 'src/app/service/sink.service';
 import { TopsService } from 'src/app/service/tops.service';
 import { SinkType } from 'src/Classes/sinkType';
@@ -14,15 +14,14 @@ import { Tops } from 'src/Classes/tops';
 })
 export class StandardTopComponent implements OnInit {
 
+  
+  topId!:string;
+
   submitted = false;
   submitEnabled = false;
   standardTopGroup!: FormGroup;
-
-  constructor(private topService: TopsService, private sinkService: SinkService, private fb: FormBuilder) { }
-
   model!: Tops;
   showSubmit = true;
-
   capOptions: string[] = ["RAW", "CAP", "SPL"];
   sinkType: SinkType[] = [
     { "id": 1, "sink_type": "NONE" },
@@ -31,7 +30,13 @@ export class StandardTopComponent implements OnInit {
   sinkSide: string[] = ["From the left", "From the right"];
   sinkShow: boolean = false;
 
+
+  constructor(private topService: TopsService, private sinkService: SinkService, private fb: FormBuilder, private commonService: CommonService) { }
+
   ngOnInit() {
+    //Data service
+    this.commonService.data$.subscribe(res => this.topId = res)
+
     this.topService.getBlankTop().subscribe(
       (response: Tops) => {
         this.model = response;
@@ -42,6 +47,7 @@ export class StandardTopComponent implements OnInit {
       }
     )
   }
+
   get lengthControl() { return this.standardTopGroup.get('lengthControl'); }
 
   get depthControl() { return this.standardTopGroup.get('depthControl'); }
@@ -93,8 +99,32 @@ export class StandardTopComponent implements OnInit {
   }
 
   onSubmit() {
+    
+    this.commonService.changeData('1');
     this.submitted = true;
     console.log(this.standardTopGroup.invalid)
+
+    if(this.standardTopGroup.invalid)
+    { return; }
+     
+      this.model.length = this.lengthControl?.value;
+      this.model.depth = this.depthControl?.value;
+      this.model.lSide = this.lSideControl?.value;
+      this.model.rSide = this.rSideControl?.value;
+      this.model.sinkType = this.sinkTypeControl?.value;
+      this.model.sinkMeasurement = this.sinkMeasureControl?.value;
+      this.model.sinkSide = this.sinkTypeControl?.value;
+      console.log("model ");
+      console.log(this.model);
+
+      //this.standardTopGroup.reset(this.standardTopGroup.value)
+
+      // this.topService.saveTop(this.model).subscribe(
+      //   (response: Tops) => {
+      //     this.model = response;
+      //   }
+      // )
+    
   }
 
   initializeForm(): void {
@@ -109,6 +139,7 @@ export class StandardTopComponent implements OnInit {
     });
   }
 
+  
   /*// initializeForm(): void {
   //   console.log(this.model);
   //   this.standardTopGroup = this.fb.group({
@@ -134,7 +165,6 @@ export class StandardTopComponent implements OnInit {
       // console.log(control?.touched);
       
   // }*/
-
 
   fieldCheck(field: string) {
       let control = this.standardTopGroup.get(field);

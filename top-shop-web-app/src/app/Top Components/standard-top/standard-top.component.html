@@ -1,15 +1,14 @@
 <div class="standard_container">
-
   <div id="topImg">
     <img src="../../../assets/images/Top Shapes/Standard.png">
   </div>
   <div id="overlayForm">
-    <form [formGroup]="standardTopGroup" (ngSubmit)="onSubmit()">
+    <form [formGroup]="standardTopGroup" >
       <!--Ex Form -->
       <div id="row1">
         <div style="flex-grow:2;"></div>
         <input formControlName="lengthControl" [value]="model.length" style="width:70px;" id="length" type="text"
-          name="Length" placeholder="Length">
+          name="length" placeholder="Length">
 
         <div class="error-box" *ngIf="fieldCheck('lengthControl')">
           <div *ngIf="requiredControl('lengthControl')">
@@ -127,5 +126,5 @@
   </div>
 </div>
 <div id="submitButton">
-  <button class="button1" (click)="onSubmit()">Save</button>
+  <button class="button1" (click)="onSubmit()" #submitButton>Save</button>
 </div>

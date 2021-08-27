@@ -15,6 +15,9 @@ import { BackButtonComponent } from './back-button/back-button.component';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderInfoEntryComponent } from './order-info-entry/order-info-entry.component';
 import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
+import { VanityTopComponent } from './Top Components/vanity-top/vanity-top.component';
+import { BarTopComponent } from './Top Components/bar-top/bar-top.component';
+import { RedirectComponentComponent } from './redirect-component/redirect-component.component';
 
 const routes: Routes = [
   { path: 'app-root', component: AppComponent},
@@ -32,7 +35,10 @@ const routes: Routes = [
     MeasurementEntryComponent,
     BackButtonComponent,
     OrderInfoEntryComponent,
-    FieldErrorDisplayComponent
+    FieldErrorDisplayComponent,
+    VanityTopComponent,
+    BarTopComponent,
+    RedirectComponentComponent
   ],
   imports: [
     BrowserModule,

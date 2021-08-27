@@ -2,9 +2,9 @@
     <app-back-button></app-back-button>
 </div>
 <div class="content_container">
-    
+    {{topId}}
     <div class="top_container">
-        <router-outlet></router-outlet>
+        <router-outlet (topIdEvent) = "getTopId($event)"></router-outlet>
     </div>
     <div>
         <button class="button1" (click)="previousTop()">Previous Top</button>

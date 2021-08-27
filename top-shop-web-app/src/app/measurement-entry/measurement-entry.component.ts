@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TopPhoto } from 'src/Classes/topPhoto';
 import { Tops } from 'src/Classes/tops';
+import { CommonService } from '../service/common.service';
 import { TopsService } from '../service/tops.service';
 
 
@@ -17,12 +18,17 @@ export class MeasurementEntryComponent implements OnInit {
   topInfo! : Tops;
   pageUrl!: any;
   topPhoto: TopPhoto[] = [];
+  topIds: string [] = []
   next: number = 1;
   previous: number = -1;
+  topId!: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private topService: TopsService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private topService: TopsService, private commonService: CommonService) {}
 
   ngOnInit(): void {
+
+    //Data service
+    this.commonService.data$.subscribe( (res: string) => this.topIds.push)
 
     this.pageUrl = history.state.backPage;
     this.topPhoto = history.state.topFiles;
@@ -30,21 +36,12 @@ export class MeasurementEntryComponent implements OnInit {
     this.topService.getBlankTop().subscribe(
       (response: Tops) => {
         this.topInfo = response;
-        
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     )
     this.router.navigate(['standard_top'], {state:{topFiles: this.topPhoto, backPage: this.pageUrl}, relativeTo: this.route});
-    // this.topPhoto = [
-    //   { type: "Standard", file: "Standard" },
-    //   { type: "Standard Vanity", file: "Standard" },
-    //   { type: "Right L Corner", file: "Point_Right_L_Corner" },
-    //   { type: "Left L Corner", file: "Point_Left_L_Corner" },
-    //   { type: "U Shaped", file: "U_Shaped_Legs" }
-    // ];
-    //this.initOpen();
   }
 
   initOpen() {
@@ -70,5 +67,10 @@ export class MeasurementEntryComponent implements OnInit {
   receiveUpdate(updatedTop: any){
     console.log("move");
     this.topInfo = JSON.parse(updatedTop);
+  }
+
+  public getTopId(id : any): void{
+    console.log("here")
+    console.log(id)
   }
 }
