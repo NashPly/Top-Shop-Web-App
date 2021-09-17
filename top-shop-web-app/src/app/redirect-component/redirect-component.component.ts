@@ -16,6 +16,7 @@ export class RedirectComponentComponent implements OnInit {
   currentTopId!: number;
   prevTopId!: number;
   */
+    orderId = history.state.orderId
     topRouteList = history.state.topRouteList
     nextTop = history.state.nextTopRoute
     currentTop = history.state.currentTopRoute

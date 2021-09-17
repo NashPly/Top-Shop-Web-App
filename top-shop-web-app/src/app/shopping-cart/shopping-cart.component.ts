@@ -86,17 +86,18 @@ export class ShoppingCartComponent implements OnInit {
     this.topOrder.leftLCorner = this.topPhoto[3].quantity;
     this.topOrder.uShaped = this.topPhoto[4].quantity;
 
-    this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto, backPage: this.pageUrl}});
+    // this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto, backPage: this.pageUrl}});
 
     //TODO Remove when ready
-    // this.orderListService.saveOrderList(this.topOrder).subscribe(
-    //   (response: number) => {
-    //     //number returns the list ID
-    //     this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto}});
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     alert(error.message);
-    //   }
-    // )
+    this.orderListService.saveOrderList(this.topOrder).subscribe(
+      (response: number) => {
+        //number returns the list ID
+        this.topOrder.id = response;
+        this.router.navigate(['measurement_entry'],{state: {orderId: this.topOrder.id , topFiles: this.topPhoto, backPage: this.pageUrl}});
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 }

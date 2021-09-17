@@ -17,8 +17,11 @@ export class OrderListService {
         return this.http.get<OrderList>(`${this.apiServerUrl}/blankOrderList`)
     }
 
-    public getOrderList(): Observable<OrderList> {
+    public getGenericOrderList(): Observable<OrderList> {
         return this.http.get<OrderList>(`${this.apiServerUrl}/getOrder/1`)
+    }
+    public getOrderListById(num: number): Observable<OrderList> {
+        return this.http.get<OrderList>(`${this.apiServerUrl}/getOrder/${num}`)
     }
 
     public saveOrderList(order: OrderList): Observable<number> {

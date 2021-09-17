@@ -5,6 +5,7 @@ import { OrderList } from 'src/Classes/orderList';
 import { TopPhoto } from 'src/Classes/topPhoto';
 import { Tops } from 'src/Classes/tops';
 import { CommonService } from '../service/common.service';
+import { OrderListService } from '../service/orderList.service';
 import { TopsService } from '../service/tops.service';
 
 
@@ -32,11 +33,9 @@ export class MeasurementEntryComponent implements OnInit {
   previous: number = -1;
   */
 
-  constructor(private router: Router, private route: ActivatedRoute, private topService: TopsService, private commonService: CommonService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private topService: TopsService, private commonService: CommonService, private orderListService: OrderListService) { }
 
   ngOnInit(): void {
-
-
     //Data service
     this.commonService.data$.subscribe((res: string) => this.topIds.push)
 
@@ -52,49 +51,38 @@ export class MeasurementEntryComponent implements OnInit {
       }
     )
 
+    if (!this.tempStaticOrderList) {
+      this.orderListService.getOrderListById(history.state.orderId).subscribe(
+        (response: OrderList) => {
+          this.tempStaticOrderList = response;
+          this.createMechanism();
 
-    this.tempStaticOrderList = { id: 1, kitchenTop: 2, vanityTop: 3, barTop: 0, rightLCorner: 0, leftLCorner: 0, uShaped: 0 }
+          this.onLoadNav();
+          
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+    } else {
+      this.onLoadNav();
+    }
+
+    //this.tempStaticOrderList = { id: 1, kitchenTop: 2, vanityTop: 3, barTop: 0, rightLCorner: 0, leftLCorner: 0, uShaped: 0 }
 
     //test
-    this.topRouteList = ["vanity_top", "standard_top", "vanity_top", "vanity_top"]
-      console.log(this.topRouteList)
+    //this.topRouteList = ["vanity_top", "standard_top", "vanity_top", "vanity_top"]
+    console.log(this.topRouteList)
     //Use this in production \/ \/
-    //this.createMechanism()
-
-
-  //test to see if I can tell if I'm returning here
-  if(history.state.currentTopRoute){
-    this.topIterator = history.state.currentTopId
-    this.router.navigate([history.state.currentTopRoute], {
-      relativeTo: this.route,
-      state: {
-        topRouteList: this.topRouteList,
-        nextTopRoute: this.topRouteList[this.topIterator + 1],
-        currentTopRoute: this.topRouteList[this.topIterator],
-        prevTopRoute: this.topRouteList[this.topIterator-1],
-        nextTopId: this.topIterator + 1,
-        currentTopId: this.topIterator,
-        prevTopId: this.topIterator - 1
-      }
-    })
-  } else{
-    this.router.navigate([this.topRouteList[this.topIterator]], { relativeTo: this.route })
-  }
-  
-    
-
-    
-    
     //this.router.navigate(['standard_top'], { state: { topFiles: this.topPhoto, backPage: this.pageUrl }, relativeTo: this.route });
   }
-
-
 
   nextTop() {
     console.log("next")
     console.log(this.topIterator + 1)
     this.router.navigate(['redirect'], {
       state: {
+        orderId: history.state.orderId,
         topRouteList: this.topRouteList,
         nextTopRoute: this.topRouteList[this.topIterator + 2],
         currentTopRoute: this.topRouteList[this.topIterator + 1],
@@ -111,7 +99,7 @@ export class MeasurementEntryComponent implements OnInit {
       state: {
         topRouteList: this.topRouteList,
         nextTopRoute: this.topRouteList[this.topIterator],
-        currentTopRoute: this.topRouteList[this.topIterator -1],
+        currentTopRoute: this.topRouteList[this.topIterator - 1],
         prevTopRoute: this.topRouteList[this.topIterator - 2],
         nextTopId: this.topIterator,
         currentTopId: this.topIterator - 1,
@@ -120,14 +108,12 @@ export class MeasurementEntryComponent implements OnInit {
     });
   }
 
-
-
   receiveUpdate(updatedTop: any) {
     console.log("move");
     this.topInfo = JSON.parse(updatedTop);
   }
 
-  public getTopId(id: any): void {
+  getTopId(id: any) {
     console.log("here")
     console.log(id)
   }
@@ -142,5 +128,27 @@ export class MeasurementEntryComponent implements OnInit {
     }
 
     console.log(this.topRouteList)
+  }
+
+  onLoadNav(){
+
+    //test to see if I can tell if I'm returning here
+    if (history.state.currentTopRoute) {
+      this.topIterator = history.state.currentTopId
+      this.router.navigate([history.state.currentTopRoute], {
+        relativeTo: this.route,
+        state: {
+          topRouteList: this.topRouteList,
+          nextTopRoute: this.topRouteList[this.topIterator + 1],
+          currentTopRoute: this.topRouteList[this.topIterator],
+          prevTopRoute: this.topRouteList[this.topIterator - 1],
+          nextTopId: this.topIterator + 1,
+          currentTopId: this.topIterator,
+          prevTopId: this.topIterator - 1
+        }
+      })
+    } else {
+      this.router.navigate([this.topRouteList[this.topIterator]], { relativeTo: this.route })
+    }
   }
 }
