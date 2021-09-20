@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonService } from 'src/app/service/common.service';
 import { SinkService } from 'src/app/service/sink.service';
@@ -14,8 +14,8 @@ import { Tops } from 'src/Classes/tops';
 })
 export class StandardTopComponent implements OnInit {
 
-  
-  topId!:string;
+
+  topIds: number[] = [];
 
   submitted = false;
   submitEnabled = false;
@@ -35,17 +35,43 @@ export class StandardTopComponent implements OnInit {
 
   ngOnInit() {
     //Data service
-    this.commonService.data$.subscribe(res => this.topId = res)
+    this.commonService.topId$.subscribe(res => this.topIds = res)
+    if (this.topIds[0] == 0) {
+      this.topIds.splice(0, 1)
+    }
 
-    this.topService.getBlankTop().subscribe(
-      (response: Tops) => {
-        this.model = response;
-        this.initializeForm();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    )
+    if (this.topIds[history.state.topIterator]) {
+      console.log("Returned successfully");
+      console.log((this.topIds))
+      console.log([history.state.topIterator])
+      this.topService.getTopById(this.topIds[history.state.topIterator]).subscribe(
+        (response: Tops) => {
+          this.model = response;
+          console.log("this.model")
+    console.log(this.model)
+          this.initializeFormWithValues()
+          if(this.model.sinkType.id == 1){
+          this.sinkShow = false;
+          } else{
+            this.sinkShow = true;
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+    } else {
+      console.log("New top");
+      this.topService.getBlankTop().subscribe(
+        (response: Tops) => {
+          this.model = response;
+          this.initializeForm();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+    }
   }
 
   get lengthControl() { return this.standardTopGroup.get('lengthControl'); }
@@ -99,32 +125,32 @@ export class StandardTopComponent implements OnInit {
   }
 
   onSubmit() {
-    
-    this.commonService.changeData('1');
     this.submitted = true;
-    console.log(this.standardTopGroup.invalid)
 
-    if(this.standardTopGroup.invalid)
-    { return; }
-     
-      this.model.length = this.lengthControl?.value;
-      this.model.depth = this.depthControl?.value;
-      this.model.lSide = this.lSideControl?.value;
-      this.model.rSide = this.rSideControl?.value;
-      this.model.sinkType = this.sinkTypeControl?.value;
-      this.model.sinkMeasurement = this.sinkMeasureControl?.value;
-      this.model.sinkSide = this.sinkTypeControl?.value;
-      console.log("model ");
-      console.log(this.model);
+    if (this.standardTopGroup.invalid) { return; }
 
-      //this.standardTopGroup.reset(this.standardTopGroup.value)
+    this.model.length = this.lengthControl?.value;
+    this.model.lSide = this.lSideControl?.value;
+    this.model.rSide = this.rSideControl?.value;
+    this.model.depth = this.depthControl?.value;
+    this.model.sinkType = this.sinkTypeControl?.value;
+    this.model.sinkMeasurement = this.sinkMeasureControl?.value;
+    this.model.sinkSide = this.sinkTypeControl?.value;
 
-      // this.topService.saveTop(this.model).subscribe(
-      //   (response: Tops) => {
-      //     this.model = response;
-      //   }
-      // )
-    
+    console.log("this.model")
+    console.log(this.model)
+
+    //this.standardTopGroup.reset(this.standardTopGroup.value)
+    if (!this.topIds[history.state.topIterator]) {
+
+      this.topService.saveTop(this.model).subscribe(
+        (response: Tops) => {
+          this.topIds.push(response.id);
+          console.log("here");
+          this.commonService.topId$.subscribe(res => console.log(res));
+        }
+      )
+    }
   }
 
   initializeForm(): void {
@@ -139,36 +165,21 @@ export class StandardTopComponent implements OnInit {
     });
   }
 
-  
-  /*// initializeForm(): void {
-  //   console.log(this.model);
-  //   this.standardTopGroup = this.fb.group({
-  //     lengthControl: [this.model.length, [Validators.required, Validators.pattern("[0-9]{1,3}(-*\d{1,2}\/\d{1,2}){0,1}")]],
-  //           depthControl: [this.model.depth, [Validators.required, Validators.pattern("/d{2}")]],
-  //           lSideControl: [this.model.lSide],
-  //           rSideControl: [this.model.rSide],
-  //           sinkTypeControl: [this.model.sinkType.id],
-  //           sinkMeasureControl: [this.model.sinkMeasurement, Validators.pattern("[0-9]{1,3}(-*\d{1,2}\/\d{1,2}){0,1}")],
-  //           sinkSideControl: this.model.sinkSide
-  //         });
-  
-      // console.log(this.submitEnabled);
-      // console.log(field);
-      // console.log(control);
-      // console.log("this.submitted");
-      // console.log(this.submitted);
-      // console.log("control?.invalid");
-      // console.log(control?.invalid);
-      // console.log("control?.dirty");
-      // console.log(control?.dirty);
-      // console.log("control?.touched");
-      // console.log(control?.touched);
-      
-  // }*/
+  initializeFormWithValues(): void {
+    this.standardTopGroup = this.fb.group({
+      lengthControl: [this.model.length, [Validators.required, Validators.pattern("^\\d{1,3}(-*\\d{1,2}\\/\\d{1,2}){0,1}")]],
+      lSideControl: [this.model.lSide],
+      rSideControl: [this.model.rSide],
+      depthControl: [this.model.depth, [Validators.required, Validators.pattern("\\d{1,2}")]],
+      sinkTypeControl: [this.model.sinkType.id],
+      sinkMeasureControl: [this.model.sinkMeasurement],
+      sinkSideControl: [this.sinkSide[this.model.sinkSide-2]]
+    });
+  }
 
   fieldCheck(field: string) {
-      let control = this.standardTopGroup.get(field);
-      return (this.submitted && control?.invalid)
+    let control = this.standardTopGroup.get(field);
+    return (this.submitted && control?.invalid)
   }
 
   requiredControl(field: string) {

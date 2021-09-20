@@ -20,24 +20,26 @@ export class MeasurementEntryComponent implements OnInit {
   topInfo!: Tops;
   pageUrl!: any;
   topPhoto: TopPhoto[] = [];
-  topIds: string[] = []
-  topId!: string;
-
-
-  //Temporary hard code data for mechanism
-  tempStaticOrderList!: OrderList
+  topIds: number[] = [0]
+  topId!: number;
+  tempOrderList!: OrderList
   topRouteList: string[] = []
-  topIterator = 0
-  /*
-  next: number = 1;
-  previous: number = -1;
-  */
+  //Change in corolation to the previous button disabling
+  topIterator: number = 0
+
+  enableNextButton: Boolean = false
+  enablePrevButton: Boolean = false
 
   constructor(private router: Router, private route: ActivatedRoute, private topService: TopsService, private commonService: CommonService, private orderListService: OrderListService) { }
 
   ngOnInit(): void {
     //Data service
-    this.commonService.data$.subscribe((res: string) => this.topIds.push)
+    // this.commonService.getTopId().subscribe(res => this.topIds = res)
+    this.commonService.topId$.subscribe(res => this.topIds = res)
+    this.commonService.route$.subscribe(res => this.topRouteList = res)
+    if(this.topIds[0] == 0) {
+      this.topRouteList.splice(0, 1)
+    }
 
     this.pageUrl = history.state.backPage;
     this.topPhoto = history.state.topFiles;
@@ -51,39 +53,31 @@ export class MeasurementEntryComponent implements OnInit {
       }
     )
 
-    if (!this.tempStaticOrderList) {
-      this.orderListService.getOrderListById(history.state.orderId).subscribe(
+    //history.state.orderId
+    if (true) {
+      console.log(history.state.orderId)
+      this.orderListService.getOrderListById(70).subscribe(
         (response: OrderList) => {
-          this.tempStaticOrderList = response;
+          this.tempOrderList = response;
           this.createMechanism();
-
-          this.onLoadNav();
-          
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
         }
       )
     } else {
-      this.onLoadNav();
+      this.onLoadNav()
     }
-
-    //this.tempStaticOrderList = { id: 1, kitchenTop: 2, vanityTop: 3, barTop: 0, rightLCorner: 0, leftLCorner: 0, uShaped: 0 }
-
-    //test
-    //this.topRouteList = ["vanity_top", "standard_top", "vanity_top", "vanity_top"]
-    console.log(this.topRouteList)
-    //Use this in production \/ \/
-    //this.router.navigate(['standard_top'], { state: { topFiles: this.topPhoto, backPage: this.pageUrl }, relativeTo: this.route });
   }
 
   nextTop() {
     console.log("next")
-    console.log(this.topIterator + 1)
+    this.commonService.topId$.subscribe(res => console.log(res))
+    console.log(this.topIterator)
     this.router.navigate(['redirect'], {
       state: {
-        orderId: history.state.orderId,
         topRouteList: this.topRouteList,
+        topIterator: this.topIterator + 1,
         nextTopRoute: this.topRouteList[this.topIterator + 2],
         currentTopRoute: this.topRouteList[this.topIterator + 1],
         prevTopRoute: this.topRouteList[this.topIterator],
@@ -95,9 +89,12 @@ export class MeasurementEntryComponent implements OnInit {
   }
 
   previousTop() {
+    console.log("previous")
+    this.commonService.topId$.subscribe(res => console.log(res))
     this.router.navigate(['redirect'], {
       state: {
         topRouteList: this.topRouteList,
+        topIterator: this.topIterator - 1,
         nextTopRoute: this.topRouteList[this.topIterator],
         currentTopRoute: this.topRouteList[this.topIterator - 1],
         prevTopRoute: this.topRouteList[this.topIterator - 2],
@@ -119,26 +116,31 @@ export class MeasurementEntryComponent implements OnInit {
   }
 
   createMechanism() {
-    for (let i = 0; i < this.tempStaticOrderList.kitchenTop; i++) {
+    for (let i = 0; i < this.tempOrderList.kitchenTop; i++) {
       this.topRouteList.push("standard_top")
     }
 
-    for (let i = 0; i < this.tempStaticOrderList.vanityTop; i++) {
+    for (let i = 0; i < this.tempOrderList.vanityTop; i++) {
       this.topRouteList.push("vanity_top")
     }
-
-    console.log(this.topRouteList)
+    this.onLoadNav()
   }
 
-  onLoadNav(){
-
+  onLoadNav() {
     //test to see if I can tell if I'm returning here
-    if (history.state.currentTopRoute) {
-      this.topIterator = history.state.currentTopId
-      this.router.navigate([history.state.currentTopRoute], {
+    if (history.state.topIterator) {
+      //this.commonService.getRouteList().subscribe(res => this.topRouteList = res)
+      this.topIterator = history.state.topIterator
+      // console.log("onLoadNaV")
+      // console.log(this.topIterator)
+      // console.log(this.topRouteList)
+
+      this.disableButtons()
+      this.router.navigate([this.topRouteList[this.topIterator]], {
         relativeTo: this.route,
         state: {
           topRouteList: this.topRouteList,
+          topIterator: this.topIterator,
           nextTopRoute: this.topRouteList[this.topIterator + 1],
           currentTopRoute: this.topRouteList[this.topIterator],
           prevTopRoute: this.topRouteList[this.topIterator - 1],
@@ -148,7 +150,28 @@ export class MeasurementEntryComponent implements OnInit {
         }
       })
     } else {
-      this.router.navigate([this.topRouteList[this.topIterator]], { relativeTo: this.route })
+      this.disableButtons()
+      console.log(this.topRouteList)
+      this.router.navigate([this.topRouteList[this.topIterator]], {
+        relativeTo: this.route,
+        state: {
+          topIterator: this.topIterator,
+        }
+      })
+    }
+  }
+
+  disableButtons() {
+    if (this.topIterator == 0) {
+      this.enablePrevButton = true;
+    } else {
+      this.enablePrevButton = false;
+    }
+
+    if (this.topRouteList.length > this.topIterator + 1) {
+      this.enableNextButton = false;
+    } else {
+      this.enableNextButton = true;
     }
   }
 }

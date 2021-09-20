@@ -17,7 +17,15 @@ export class TopsService{
         return this.http.get<Tops>(`${this.apiServerUrl}/getNewTop`)
     }
 
+    public getTopById(id: number): Observable<Tops> {
+        return this.http.get<Tops>(`${this.apiServerUrl}/getTopById/${id}`)
+    }
+
     public saveTop(tops: Tops): Observable<Tops>{
         return this.http.post<Tops>(`${this.apiServerUrl}/save`, tops)
+    }
+
+    public saveById(tops: Tops): Observable<Tops>{
+        return this.http.post<Tops>(`${this.apiServerUrl}/save/${tops.id}`,tops)
     }
 }

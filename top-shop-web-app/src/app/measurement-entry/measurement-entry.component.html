@@ -2,12 +2,12 @@
     <app-back-button></app-back-button>
 </div>
 <div class="content_container">
-    {{topId}}
+    {{topIds}}
     <div class="top_container">
         <router-outlet (topIdEvent) = "getTopId($event)"></router-outlet>
     </div>
     <div>
-        <button class="button1" (click)="previousTop()">Previous Top</button>
-        <button class="button1" (click)="nextTop()">Next Top</button>
+        <button class="button1" [disabled] = "enablePrevButton" (click)="previousTop()">Previous Top</button>
+        <button class="button1"  [disabled] = "enableNextButton" (click)="nextTop()">Next Top</button>
     </div>
 </div>

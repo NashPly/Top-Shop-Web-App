@@ -14,7 +14,7 @@ import { Tops } from 'src/Classes/tops';
 })
 export class BarTopComponent implements OnInit {
 
-  topId!: string;
+  topIds:number[] = [];
 
   submitted = false;
   submitEnabled = false;
@@ -33,7 +33,7 @@ export class BarTopComponent implements OnInit {
 
   ngOnInit() {
     //Data service
-    this.commonService.data$.subscribe(res => this.topId = res)
+    this.commonService.getTopId().subscribe(res => this.topIds = res)
 
     this.topService.getBlankTop().subscribe(
       (response: Tops) => {
@@ -98,7 +98,7 @@ export class BarTopComponent implements OnInit {
 
   onSubmit() {
 
-    this.commonService.changeData('1');
+    this.commonService.changeData(1);
     this.submitted = true;
     console.log(this.standardTopGroup.invalid)
 

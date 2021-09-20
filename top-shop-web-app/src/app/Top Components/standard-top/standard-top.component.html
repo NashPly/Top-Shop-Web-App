@@ -61,14 +61,14 @@
             Depth is required
           </div>
           <div *ngIf="patternedControl('depthControl')">
-            Please enter valid Measurement (i.e. 54 or 123-15/16)
+            Please enter valid Measurement (i.e. 54 or 23-15/16)
           </div>
         </div>
-        <input formControlName="depthControl" style="align-self:flex-end; width:70px; margin-right:5px;" type="text"
-          placeholder="Depth" [value]="model.depth">
+        <input formControlName="depthControl" [value]="model.depth" style="align-self:flex-end; width:70px; margin-right:5px;" id="depth" type="text"
+          placeholder="Depth" name="depth">
       </div>
 
-
+      
 
       <div id="row6" style="height: 110px;">
         <p></p><br><br><br><br>

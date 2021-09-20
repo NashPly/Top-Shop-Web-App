@@ -13,5 +13,5 @@ export interface Tops{
     topPlacement: TopPlacement;
     sinkType: SinkType;
     sinkMeasurement: string;
-    sinkSide: string;
+    sinkSide: number;
 }

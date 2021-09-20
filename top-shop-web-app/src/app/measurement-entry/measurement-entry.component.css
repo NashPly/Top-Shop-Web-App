@@ -51,3 +51,7 @@ select:hover{
     background-color:#d6e0fd;
     cursor: pointer;
     }
+
+.button1:disabled{
+    background-color: red;
+}
